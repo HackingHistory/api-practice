@@ -1,0 +1,23 @@
+{
+  "name": "02-api-practice",
+  "version": "0.0.1",
+  "description": "class assignment 2 for hacking history",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node node_modules/http-server/bin/http-server -o index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HackingHistory/01-html-card-assignment.git"
+  },
+  "author": "Matt Price <matt.price@utoronto.ca>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/HackingHistory/01-html-card-assignment/issues"
+  },
+  "homepage": "https://github.com/HackingHistory/01-html-card-assignment#readme",
+  "dependencies": {
+    "http-server": "^14.1.0"
+  }
+}

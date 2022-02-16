@@ -21,6 +21,7 @@ main#cardcontainer {
   display: grid;
   grid-auto-rows: 80rem;
   grid-gap: 2rem;
+  grid-template-columns: repeat( auto-fit, minmax(60rem, 1fr) );
 }
 
 
@@ -73,9 +74,11 @@ section.card header a, section.card footer a {
 }
 
 /* get the image to fit */
-section.card img.profile-image {
+section.card>figure {
   object-fit: cover;
   height: 35rem;
+  overflow: auto;
+  
   /* height: 100%; */
   /* width: 100%; */
   /* object-fit: contain; */
