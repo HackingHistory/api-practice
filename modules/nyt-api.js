@@ -13,12 +13,12 @@ const nytKey="XN2lYcsGj4xgIhCLNGfW7eA6b0VB1eKi"
  * @returns {} 
  */
 function cardStructureFromNytData(article){
-  const {title, fields, ...info} = article
   const figure = (article.multimedia && article.multimedia.length > 0) ? `<figure><img src="https://static01.nytimes.com/${article.multimedia[0].url}" /></figure>` : ''
   return {title: article.headline.main,
           figure: figure,
-          //author: fields.bylne,
-          text: article.lead_paragraph}
+          author: article.byline.original,
+          text: article.lead_paragraph,
+          url: article.web_url}
   
 }
 

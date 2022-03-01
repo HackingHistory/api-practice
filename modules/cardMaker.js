@@ -5,16 +5,22 @@ function ml(tagName, props, text) {
       if(name.indexOf("on") === 0) {
         el.addEventListener(name.substr(2).toLowerCase(), props[name], false)
       } else {
-        el.setAttribute(name, props[name]);
+        props[name] && el.setAttribute(name, props[name]);  
       }
     }
   }
-  text ? el.textContent = text : el.textContent = ""
+  
+  text ? el.innerHTML = text : el.innerHTML = ""
   return el
 }
 
 function buildCard (structure) {
-  const header = ml("header", {class:"card-header"}, structure.title),
+  let title;
+  if (structure.url) {
+    title = `<a href="${structure.url}">${structure.title}</a>`
+  } else {title = structure.title}
+  if (structure.author) {structure.text = `<p class="byline">${structure.author}</p>` + structure.text}
+  const header = ml("header", {class:"card-header"}, title),
         figure=structure.figure,
         bodySec=ml("section", {class:"card-body"}),
         card=ml("section", {class:"card"})

@@ -23,23 +23,14 @@ const wikiBase="https://en.wikipedia.org/w/api.php?origin=*&format=json&action="
  */
 async function cardStructureFromWikiData(article){
   const {title, fields, ...info} = article
-  //console.log(article);
   const target=`${wikiBase}parse&pageid=${article.pageid}&prop=text&section=0`
   const pageData=await fetch (target)
         .then(response => response.json())
         .then(json=>json.parse)
   console.log(pageData)
-  
-  //await getDetails(article)
-  // const figure = (article.multimedia && article.multimedia.length > 0) ? `<figure><img src="https://static01.nytimes.com/${article.multimedia[0].url}" /></figure>` : ''
   return {title: pageData.title,
-          //figure: figure,
-          //author: fields.bylne,
+          url: `https://en.Wikipedia.org/?curid=${pageData.pageid}`,
           text: pageData.text["*"]}
-  
-}
-
-async function getDetails (article) {
   
 }
 
@@ -59,11 +50,12 @@ async function wikiQuery (query, parameters) {
       extraParamString += `&${k}=${v}`
     }
   }
-  const fullUrl=`${wikiBase}query&list=search&srsearch=${query}&show-fields=all${extraParamString}`
+  const fullUrl=`${wikiBase}query&list=search&srsearch=${query}${extraParamString}`
   let retrievedData = await fetch (fullUrl)
       .then(response => response.json())
       .then(json => json)
   let results = retrievedData.query.search
+  //console.log(results);
   let fixedResults = await Promise.all(results.map(r => cardStructureFromWikiData(r)))
   let cards = fixedResults.map(buildCard)
   cards.forEach (c => container.appendChild(c))

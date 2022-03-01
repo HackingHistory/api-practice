@@ -7,16 +7,17 @@ const guardianKey="3d0d0451-b151-42be-9a70-f71970e434f0"
 // possible filters are from-date, to-date, section (news, politics, sports)
 
 /**
- * takes a single article returned fro mthe Guardian API and creates a standard
+ * takes a single article returned from the Guardian API and creates a standard
  * card object from it
  * @param {} article
  * @returns {} 
  */
 function cardStructureFromGuardianData(article){
-  const {title, fields, ...info} = article
+  
+  const {fields} = article
   return {title: fields.headline,
-          figure: fields.main,
-          author: fields.bylne,
+          figure: fields.thumbnail ? `<figure><img src="${fields.thumbnail}" /></figure>` : "",
+          author: fields.byline,
           text: fields.body}
   
 }
@@ -42,6 +43,7 @@ async function guardianQuery (query, parameters) {
       .then(response => response.json())
       .then(json => json.response)
   let results = retrievedData.results
+  console.log(results);
   let fixedResults = results.map(r => cardStructureFromGuardianData(r))
   let cards = fixedResults.map(buildCard)
   cards.forEach (c => container.appendChild(c))
